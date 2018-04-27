@@ -1,0 +1,15 @@
+{
+	"name" : "damien.moulin/Duel",
+	"description" : "Mini jeu de combat fun",
+	"authors" : [{
+			"name" : "dmoulin",
+			"email" : "damien.moulin1@gmail.com"
+		}
+	],
+	"minimum-stability" : "dev",
+	"prefer-stable" : true,
+	"repositories": [
+  	],
+	"require": {
+	}
+}
