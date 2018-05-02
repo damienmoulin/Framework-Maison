@@ -1,23 +1,11 @@
 <?php
 namespace Controller;
 
-use Template;
-
-class indexController
+class indexController extends Controller
 {
-    public function __construct()
-    {
-        
-    }
-    
     public function indexAction()
-    {        
+    {
         return $this->render('index');
     }
-    
-    public function render($route, $attributes = null)
-    {
-        $page = file_get_contents('Template/'.$route.'.php');
-        echo $page;
-    }
 }
+
