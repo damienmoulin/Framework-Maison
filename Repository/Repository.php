@@ -9,10 +9,10 @@ class Repository
     
     public function __construct($db)
     {
-        $this->db = $db;
+        $this->db = $db->getDb();
     }
     
-    public function findBy($field, $value)
+    public function findBy($field = 'id', $value)
     {
         $entityName = 'Entity\\'.$this->getClass();
         
@@ -26,9 +26,56 @@ class Repository
             array_push($attributs, strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $prop->getName())));
         }
 
-        $sql = "SELECT ".implode(',', $attributs)." WHERE ".$field."=".$value;
-        var_dump($sql);
+        $sql = "SELECT ".implode(',', $attributs)." FROM ".strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->getClass()))." WHERE ".$field."= :value";
+        
         //avec db executer la requete
+        $statment = $this->db->prepare($sql);
+        $statment->execute(
+            [
+                ':value' => $value
+            ]
+        );
+        $result = $statment->fetchAll(\PDO::FETCH_ASSOC);
+        
+        if (count($result) == 1 ) {
+            $id = 0;
+            //On crée des entitées correspondantes
+            $entity = $this->generateEntity($entityName, $result[$id]);
+            return $entity;
+        } elseif (count($result) > 1){
+            $entities = [];
+            //Boucle sur les résultats
+            foreach ($result as $elem) {
+                $entity = $this->generateEntity($entityName, $elem);
+                array_push($entities, $entity);
+            }
+            return $entities;
+        }
+    }
+    
+    public function generateEntity($entityName, $result)
+    {
+        //Création de l'entitée
+        $entity = new $entityName();
+        
+        //Boucle sur les champs
+        foreach ($result as $key => $attribut) {
+            
+            //On coupe au niveau des _ pour reformater le setter
+            $a = explode("_", $key);
+            
+            //Generation des majuscules sur 1er lettre
+            foreach ($a as $k => $i) {
+                $a[$k] = ucfirst($i);
+            }
+            
+            //Generation du setter
+            $method = 'set'.implode($a);
+            
+            //Appel du setter
+            $entity->$method($attribut);
+        }
+        return $entity;
     }
     
     public function insert()

@@ -15,8 +15,9 @@ class indexController extends Controller
     
     public function indexAction()
     {
-        $this->userRepository->findBy('id', 12);
+        $this->userRepository->findBy('name', 'thomas');
           
+        $this->userRepository->insert();
         return $this->render('index');
     }
 }
