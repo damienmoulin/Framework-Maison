@@ -14,18 +14,26 @@ class userController extends Controller
     
     public function loginAction()
     {
+        $error = [];
+        
         if (!empty($_POST)) {
-            $this->userRepository->connect($_POST);
+            $error = $this->userRepository->connect($_POST);
         }
-        return $this->render('user/login');
+        return $this->render('user/login', $error);
     }
     
     public function registerAction()
     {
         if (!empty($_POST)) {
-            $user = $this->userRepository->register($_POST);
+            $this->userRepository->register($_POST);
         }
         return $this->render('user/register');
+    }
+    
+    public function logoutAction()
+    {
+        session_destroy();
+        header('Location: index.php?r=index');
     }
 }
 

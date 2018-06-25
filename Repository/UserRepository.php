@@ -23,20 +23,17 @@ class UserRepository extends Repository
                 
                 header('Location: index.php?r=index');
             } else {
-                echo 'Mot de passe incorrect';
-                return;
+                return [ 'error' => 'Mot de passe incorrect'];
             }
         } else {
-            echo 'Cet email n \'est associé à aucun compte';
-            return;
+            return [ 'error' => 'Cet email n \'est associé à aucun compte'];
         }
     }
     
     public function register($params)
     {
         if ($params['password'] != $params['password-confirm']) {
-            echo "les mots de passes doivent etre identiques";
-            return;
+            return [ 'error' => 'Les mots de passes doivent etre identiques'];
         }
         
         if (empty($this->findBy('email', $params['email']))) {
@@ -50,11 +47,9 @@ class UserRepository extends Repository
             
             $this->insert($user);
             
-            echo "vous êtes bien enregistré";
-            return;
+            return [ 'success' => 'Vous êtes bien enregistré'];
         } else {
-            echo $params['email']." est déja utilisé";
-            return;
+            return [ 'error' => $params['email'].' est déja utilisé'];
         }
 
     }

@@ -21,7 +21,8 @@ return
             'controller' => 'userController',
             'method' => [
                 'login' => 'loginAction',
-                'register' => 'registerAction'
+                'register' => 'registerAction',
+                'logout' => 'logoutAction'
             ],
             'authentification' => null
         ]
