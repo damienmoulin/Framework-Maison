@@ -28,23 +28,26 @@ class index
         }
         
         if (isset($_REQUEST['r']) && isset($this->routes[$_REQUEST['r']])) {
-            
             $controllerName = $this->routes[$_REQUEST['r']]['controller'];
             if (isset($_REQUEST['action']) && isset($this->routes[$_REQUEST['r']]['method'][$_REQUEST['action']])) {
                 $action = $this->routes[$_REQUEST['r']]['method'][$_REQUEST['action']];
+               
             } else {
                 $action = 'indexAction';
             }
             
+            //Verification des droits d'accés
+            if (isset($this->routes[$_REQUEST['r']]['authentification']) && (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $this->routes[$_REQUEST['r']]['authentification']))) {
+                $controllerName = $this->routes['login']['controller'];
+                $action = $this->routes['login']['method']['login'];
+            }
+            
         } else {
+            //Attention aux droits d'accés
             $controllerName = $this->routes['default']['controller'];
             $action = $this->routes['default']['method'];
         }
         
-        //Verification des droits d'accés
-        if (isset($_SESSION['login'])) {
-            //Verficiation des roles en fonction de la route, si acces granted aller sur la route sinon aller sur connexion
-        }
         $class = "\Controller\\".$controllerName;
         
         $controller = new $class($this->database);

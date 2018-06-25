@@ -64,15 +64,15 @@ class Repository
             
             //On coupe au niveau des _ pour reformater le setter
             $a = explode("_", $key);
-            
+
             //Generation des majuscules sur 1er lettre
             foreach ($a as $k => $i) {
                 $a[$k] = ucfirst($i);
             }
             
             //Generation du setter
-            $method = 'set'.implode($a);
-            
+            $method = 'set'.implode("_",$a);
+
             //Appel du setter
             $entity->$method($attribut);
         }
