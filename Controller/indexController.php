@@ -16,8 +16,8 @@ class indexController extends Controller
     
     public function indexAction()
     {
-        //$this->userRepository->findBy('name', 'thomas');
-          
+        $user = $this->userRepository->findBy('name', 'thomas');
+        var_dump($user);
         $user = new User();
         $user->setName('george');
         $user->setCategory(1);
