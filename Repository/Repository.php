@@ -1,6 +1,7 @@
 <?php
 namespace Repository;
 
+use PDO;
 use ReflectionProperty;
 
 class Repository
@@ -78,9 +79,45 @@ class Repository
         return $entity;
     }
     
-    public function insert()
+    public function insert($entity)
     {
+        //Récuperation du nom de l'entitée
+        $entityName = $this->getClass($entity);
+                       
+        //On récupere les attributs
+        $reflect = new \ReflectionClass($entity);
+        $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PROTECTED);
         
+        $attributs = [];
+        $binds = [];
+        $values = [];
+        
+        //On formate le tout pour que les attributs et les values soient aux meme places dans leurs tableaux
+        foreach ($props as $prop) {
+
+            //Encodage pour respecter la base de donnée
+            $attribut = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $prop->getName()));
+            array_push($attributs, $attribut);
+            
+            //Generation du getter
+            $method = 'get'.ucfirst($prop->getName());
+            
+            //Appel du getter et ajout au tableau
+            $value = $entity->$method();
+            if ($value == null) {
+               $value = 'null';
+            }
+            array_push($binds, ":".$attribut);
+            $values[":".$attribut] = htmlspecialchars($value);
+        }
+
+        $prepared = $this->db->prepare("INSERT INTO ".strtolower($entityName)." (".implode(',', $attributs).") VALUES (".implode(',', $binds).")");
+        try {
+            $prepared->execute($values);
+        } catch (\PDOException $e) {
+            echo 'Echec d\'enregistrement : '.$e->getMessage();
+            exit;
+        }
     }
     
     public function update()

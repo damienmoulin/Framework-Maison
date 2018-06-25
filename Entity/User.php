@@ -4,15 +4,21 @@ namespace Entity;
 class User  
 {
     /**
-     *  @var id
+     *  @var integer
      */
     private $id;
     
     /**
-     * @var name
+     * @var string
      */
     private $name;
         
+    /**
+     * 
+     * @var string
+     */
+    private $category;
+    
     /**
      * 
      * @param string $name
@@ -37,6 +43,17 @@ class User
     
     /**
      * 
+     * @param string $category
+     * @return \Entity\User
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+    
+    /**
+     * 
      * @return User/name
      */
     public function getName()
@@ -51,6 +68,15 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     *
+     * @return User/category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
         
 }
