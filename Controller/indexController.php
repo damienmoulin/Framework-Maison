@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Repository\UserRepository;
+use Entity\User;
 
 class indexController extends Controller
 {
@@ -15,9 +16,14 @@ class indexController extends Controller
     
     public function indexAction()
     {
-        $this->userRepository->findBy('id', 12);
-          
-        return $this->render('index');
+        $user = $this->userRepository->findBy('name', 'thomas');
+        var_dump($user);
+        $user = new User();
+        $user->setName('george');
+        $user->setCategory(1);
+        
+        $this->userRepository->insert($user);
+        //return $this->render('index');
     }
 }
 
