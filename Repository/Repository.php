@@ -29,6 +29,7 @@ class Repository
 
         $sql = "SELECT ".implode(',', $attributs)." FROM ".strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->getClass()))." WHERE ".$field."= :value";
         
+        
         //avec db executer la requete
         $statment = $this->db->prepare($sql);
         $statment->execute(
@@ -64,15 +65,15 @@ class Repository
             
             //On coupe au niveau des _ pour reformater le setter
             $a = explode("_", $key);
-            
+
             //Generation des majuscules sur 1er lettre
             foreach ($a as $k => $i) {
                 $a[$k] = ucfirst($i);
             }
             
             //Generation du setter
-            $method = 'set'.implode($a);
-            
+            $method = 'set'.implode("_",$a);
+
             //Appel du setter
             $entity->$method($attribut);
         }

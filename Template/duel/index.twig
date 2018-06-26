@@ -1,7 +1,9 @@
 {% include 'base/header.twig' %}
 {% include 'base/nav.html' %}
+<link rel="stylesheet" href="Template/assets/index.css">
 {% if error is defined %}
 	{{ error }}
+{% else %}
+	test
 {% endif %}
-
 {% include 'base/footer.html' %}

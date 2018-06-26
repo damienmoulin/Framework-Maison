@@ -12,13 +12,28 @@ return
         ],
     'default' =>
         [
-            'controller' => 'indexController',
-            'method' => 'indexAction',
+            'controller' => 'userController',
+            'method' => 'loginAction',
             'authentification' => ['ROLE_ADMIN','ROLE_USER']
         ],
-    'connexion' =>
+    'login' =>
         [
-            'controller' => 'connexionController',
-            'method' => 'indexAction'  
+            'controller' => 'userController',
+            'method' => [
+                'login' => 'loginAction',
+                'register' => 'registerAction',
+                'logout' => 'logoutAction'
+            ],
+            'authentification' => null
+        ],
+    'duel' =>
+        [
+            'controller' => 'duelController',
+            'method' => [
+                'create' => 'createAction',
+                'index' => 'indexAction'
+            ],
+            'authentification' => ['ROLE_ADMIN','ROLE_USER']
+           
         ]
 ];

@@ -7,7 +7,8 @@ class Controller
     
     public function __construct()
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem('Template'), array(
+        $loader = new \Twig_Loader_Filesystem('./Template/');
+        $this->twig = new \Twig_Environment($loader, array(
             'cache' => false
         ));
     }
