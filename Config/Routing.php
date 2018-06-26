@@ -25,5 +25,15 @@ return
                 'logout' => 'logoutAction'
             ],
             'authentification' => null
+        ],
+    'duel' =>
+        [
+            'controller' => 'duelController',
+            'method' => [
+                'create' => 'createAction',
+                'index' => 'indexAction'
+            ],
+            'authentification' => ['ROLE_ADMIN','ROLE_USER']
+           
         ]
 ];

@@ -14,6 +14,7 @@ class userController extends Controller
     
     public function loginAction()
     {
+        
         $error = [];
         
         if (!empty($_POST)) {

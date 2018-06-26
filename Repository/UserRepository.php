@@ -20,6 +20,7 @@ class UserRepository extends Repository
                 $_SESSION['username'] = $user->getUsername();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['role'] = $user->getRole();
+                $_SESSION['id'] = $user->getId();
                 
                 header('Location: index.php?r=index');
             } else {

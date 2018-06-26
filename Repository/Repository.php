@@ -29,6 +29,7 @@ class Repository
 
         $sql = "SELECT ".implode(',', $attributs)." FROM ".strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->getClass()))." WHERE ".$field."= :value";
         
+        
         //avec db executer la requete
         $statment = $this->db->prepare($sql);
         $statment->execute(
