@@ -36,6 +36,10 @@ class UserRepository extends Repository
         if ($params['password'] != $params['password-confirm']) {
             return [ 'error' => 'Les mots de passes doivent etre identiques'];
         }
+
+        if (strlen($params['password']) < 8) {
+            return [ 'error' => 'le mot de passe doit contenir au moins 8 caractères'];
+        }
         
         if (empty($this->findBy('email', $params['email']))) {
             $user = new User();

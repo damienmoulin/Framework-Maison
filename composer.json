@@ -1,6 +1,6 @@
 {
-	"name" : "damien.moulin/Duel",
-	"description" : "Mini jeu de combat fun",
+	"name" : "damien.moulin/Framework",
+	"description" : "Framework MVC Rest",
 	"authors" : [{
 			"name" : "dmoulin",
 			"email" : "damien.moulin1@gmail.com"
