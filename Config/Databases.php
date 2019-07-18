@@ -1,6 +1,6 @@
 <?php
 return [
-    'duel' =>
+    'default' =>
         [
             'dbname' => 'duel',
             'host' => 'localhost',

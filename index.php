@@ -22,7 +22,7 @@ class index
         $this->databases = require_once 'Config/Databases.php';
         try {
             //Connexions a la base de donnée
-            $this->database = new Service\DatabaseConnexion('duel', $this->databases);
+            $this->database = new Service\DatabaseConnexion('default', $this->databases);
         } catch (\PDOException $exception) {
             die($exception->getMessage());
         }
