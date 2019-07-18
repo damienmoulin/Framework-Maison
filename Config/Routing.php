@@ -2,38 +2,42 @@
 
 return 
 [
-    'index' => 
-        [
-            'controller' => 'indexController',
-            'method' => [
-                'index' => 'indexAction'
-            ],
-            'authentification' => ['ROLE_ADMIN','ROLE_USER']
-        ],
+    // DON'T REMOVE default route, EDIT if you want !
     'default' =>
         [
-            'controller' => 'userController',
-            'method' => 'loginAction',
-            'authentification' => ['ROLE_ADMIN','ROLE_USER']
+            'controller' => 'defaultController',
+            'method' => [
+                'GET' => 'indexAction',
+                'POST' => 'addAction',
+                'PUT' => 'editAction',
+                'DELETE' => 'deleteAction'
+            ],
+            'authentification' => null
         ],
     'login' =>
         [
             'controller' => 'userController',
             'method' => [
-                'login' => 'loginAction',
-                'register' => 'registerAction',
-                'logout' => 'logoutAction'
+                'GET' => 'showLoginAction',
+                'POST' => 'loginAction'
             ],
             'authentification' => null
         ],
-    'duel' =>
+    'register' =>
         [
-            'controller' => 'duelController',
+            'controller' => 'userController',
             'method' => [
-                'create' => 'createAction',
-                'index' => 'indexAction'
+                'GET' => 'showRegisterAction',
+                'POST' => 'registerAction'
+            ],
+            'authentification' => null
+        ],
+    'logout' =>
+        [
+            'controller' => 'userController',
+            'method' => [
+                'DELETE' => 'logoutAction'
             ],
             'authentification' => ['ROLE_ADMIN','ROLE_USER']
-           
         ]
 ];

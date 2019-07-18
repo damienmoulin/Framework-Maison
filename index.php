@@ -29,23 +29,23 @@ class index
         
         if (isset($_REQUEST['r']) && isset($this->routes[$_REQUEST['r']])) {
             $controllerName = $this->routes[$_REQUEST['r']]['controller'];
-            if (isset($_REQUEST['action']) && isset($this->routes[$_REQUEST['r']]['method'][$_REQUEST['action']])) {
-                $action = $this->routes[$_REQUEST['r']]['method'][$_REQUEST['action']];
-               
+
+            if (isset($_SERVER['REQUEST_METHOD']) && isset($this->routes[$_REQUEST['r']]['method'][$_SERVER['REQUEST_METHOD']])) {
+                $action = $this->routes[$_REQUEST['r']]['method'][$_SERVER['REQUEST_METHOD']];
             } else {
                 $action = 'indexAction';
             }
             
             //Verification des droits d'accés
             if (isset($this->routes[$_REQUEST['r']]['authentification']) && (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $this->routes[$_REQUEST['r']]['authentification']))) {
-                $controllerName = $this->routes['login']['controller'];
-                $action = $this->routes['login']['method']['login'];
+                $controllerName = $this->routes['default']['controller'];
+                $action = $this->routes['default']['method']['GET'];
             }
             
         } else {
             //Attention aux droits d'accés
             $controllerName = $this->routes['default']['controller'];
-            $action = $this->routes['default']['method'];
+            $action = $this->routes['default']['method'][$_SERVER['REQUEST_METHOD']];
         }
         
         $class = "\Controller\\".$controllerName;

@@ -1,7 +1,9 @@
 <?php
 namespace Controller;
 
-class Controller 
+use mysql_xdevapi\Exception;
+
+class Controller
 {
     private $twig;
     

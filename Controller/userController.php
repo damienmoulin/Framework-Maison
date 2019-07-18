@@ -11,30 +11,54 @@ class userController extends Controller
         parent::__construct();
         $this->userRepository = new UserRepository($db);
     }
-    
+
+    public function showLoginAction()
+    {
+        return $this->render('user/login');
+    }
+
     public function loginAction()
     {
-        
-        $error = [];
-        
+
         if (!empty($_POST)) {
-            $error = $this->userRepository->connect($_POST);
+            try {
+                $reponse = $this->userRepository->connect($_POST);
+
+                if (isset($reponse["error"])) {
+                    return $this->render('user/login', $reponse);
+                }
+                header('Location:index.php?r=default');
+            } catch (\Exception $e) {
+                throw new \Exception($e);
+            }
         }
-        return $this->render('user/login', $error);
     }
-    
+
+    public function showRegisterAction()
+    {
+        return $this->render('user/register');
+    }
+
     public function registerAction()
     {
         if (!empty($_POST)) {
-            $this->userRepository->register($_POST);
+            try {
+                $reponse = $this->userRepository->register($_POST);
+
+                if (isset($reponse["error"])) {
+                    return $this->render('user/register', $reponse);
+                }
+                header('Location:index.php?r=login');
+            } catch (\Exception $e) {
+                throw new \Exception($e);
+            }
         }
-        return $this->render('user/register');
     }
     
     public function logoutAction()
     {
         session_destroy();
-        header('Location: index.php?r=index');
+        header('Location: index.php?r=default');
     }
 }
 
